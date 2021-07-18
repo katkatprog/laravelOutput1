@@ -8,6 +8,9 @@
 </head>
 <body>
     <h1>detail</h1>
+    <form action="" method="post">
+        <input type="text" name="playerName">
+    </form>
     <p>{{ $plyr['name'] }}</p>
     <p>
         @foreach ($plyr->positions as $pstn)

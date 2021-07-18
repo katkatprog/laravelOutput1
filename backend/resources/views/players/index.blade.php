@@ -11,17 +11,24 @@
     @foreach ($plyrs as $plyr)
         <p>{{ $plyr['id'] }}, {{ $plyr['name'] }}, </p>
         <a href="/players/{{ $plyr['id'] }}">detail</a>
+        <form action="/players/delete/{{ $plyr['id'] }}" method="post">
+            @csrf
+            <button>delete</button>
+        </form>
     @endforeach
 
     <h2>new</h2>
     <form action="/players/create" method="post">
         @csrf
         <input type="text" name="playerName" placeholder="name of player" required>
-        <select name="positionId">
+        {{-- <select name="positionId">
             @foreach ($pstns as $pstn)
             <option value="{{ $pstn['id'] }}">{{ $pstn['name'] }}</option>
             @endforeach
-        </select>
+        </select> --}}
+        @foreach ($pstns as $pstn)
+            <input type="checkbox" name={{ $pstn['name'] }} >{{ $pstn['name'] }}
+        @endforeach
 
         <input type="submit" value="register">
     </form>

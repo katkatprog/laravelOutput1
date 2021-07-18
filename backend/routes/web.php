@@ -21,3 +21,4 @@ Route::get('/', function () {
 Route::get('/players', [PlayersController::class, 'index']);
 Route::get('/players/{id}', [PlayersController::class, 'show']);
 Route::post('/players/create', [PlayersController::class, 'create']);
+Route::post('/players/delete/{id}', [PlayersController::class, 'delete']);

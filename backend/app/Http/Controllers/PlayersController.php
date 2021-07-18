@@ -25,7 +25,6 @@ class PlayersController extends Controller
         // return view('players.show', ['plyr' => $plyr]);
     }
     public function create(Request $request){
-        // dd($request->positionId);
         $plyr = new Player();
         $plyr->name = $request->playerName;
         $plyr->timestamps = false;
@@ -33,12 +32,44 @@ class PlayersController extends Controller
 
         // DB::insert('insert into player_position (player_id, position_id) values (?, ?)', 
         //     [$plyr->id, $request->positionId]);
+
+        //player_positionテーブルへのインザート
+        // $plyrPstn = new PlayerPosition();
+        // $plyrPstn->player_id = $plyr->id;
+        // $plyrPstn->position_id = $request->positionId;
+        // $plyrPstn->timestamps = false;
+        // $plyrPstn->save();
+
+        //チェックボックス用の登録
+        if($request->PG != null){
+            $this->insertPosition($plyr,1);
+        }
+        if($request->SG != null){
+            $this->insertPosition($plyr,2);
+        }
+        if($request->SF != null){
+            $this->insertPosition($plyr,3);
+        }
+        if($request->PF != null){
+            $this->insertPosition($plyr,4);
+        }
+        if($request->C  != null){
+            $this->insertPosition($plyr,5);
+        }
+
+        return redirect('/players');
+    }
+    public function insertPosition($plyr, $positionId){
         $plyrPstn = new PlayerPosition();
         $plyrPstn->player_id = $plyr->id;
-        $plyrPstn->position_id = $request->positionId;
+        $plyrPstn->position_id = $positionId;
         $plyrPstn->timestamps = false;
         $plyrPstn->save();
+    }
 
+    public function delete($id){
+        $plyr = Player::find($id);
+        $plyr->delete();
         return redirect('/players');
     }
 }
